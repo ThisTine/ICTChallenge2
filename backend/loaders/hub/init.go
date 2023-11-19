@@ -49,13 +49,13 @@ func Init() {
 
 func Load() error {
 	// * Unmarshal file
-	var team []*database.Team
+	var teams []*database.Team
 	var topic []*database.Topic
 	var turn []*database.Turn
 	if err := db.DB.Find(&topic).Error; err != nil {
 		return err
 	}
-	if err := db.DB.Find(&team).Error; err != nil {
+	if err := db.DB.Find(&teams).Error; err != nil {
 		return err
 	}
 	if err := db.DB.Find(&turn).Error; err != nil {
@@ -63,7 +63,7 @@ func Load() error {
 	}
 	// * Assign hub
 	Hub.Topics = topic
-	Hub.Teams = team
+	Hub.Teams = teams
 	if len(turn) == 0 {
 		Hub.Turned = []*database.Team{
 			Hub.Teams[0],
@@ -75,13 +75,18 @@ func Load() error {
 		}
 	}
 	if len(turn) != 0 {
-		if err := db.DB.Find(&team, turn).Error; err != nil {
+		var teamturn []*uint64
+		for _, turned := range turn {
+			teamturn = append(teamturn, turned.TeamId)
+		}
+		if err := db.DB.Find(&teams, teamturn).Error; err != nil {
 			return err
 		}
-		Hub.Turned = team
+		Hub.Turned = teams
 	}
-
+	println(len(Hub.Turned))
 	logger.Log(logrus.Debug, "LOADED HUB DATA")
+
 	return nil
 }
 
