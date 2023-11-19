@@ -1,6 +1,6 @@
 package database
 
 type Raw struct {
-	Topics []*Topic `json:"topics"`
-	Teams  []*Team  `json:"teams"`
+	TopicId []*Topic `json:"topics" gorm:"primaryKey;foreignKey:TopicId;references:Id"`
+	TeamId  []*Team  `json:"teams" gorm:"primaryKey;foreignKey:TeamId;references:Id"`
 }
