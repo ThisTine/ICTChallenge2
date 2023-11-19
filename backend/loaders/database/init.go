@@ -8,7 +8,7 @@ import (
 
 var DB *gorm.DB
 
-func inti() (err error) {
+func Init() (err error) {
 	dsn := config.C.MySql
 	db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 	DB = db
