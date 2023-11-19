@@ -8,4 +8,5 @@ type config struct {
 	ProjectorSecret string      `yaml:"projector_secret" validate:"required"`
 	AdminSecret     string      `yaml:"admin_secret" validate:"required"`
 	StudentSecret   string      `yaml:"student_secret" validate:"required"`
+	MySql           string      `yaml:"mySql" validate:"required"`
 }

@@ -3,9 +3,9 @@ package database
 import "time"
 
 type Topic struct {
-	Id    uint64  `json:"id"`
-	Title string  `json:"title"`
-	Cards []*Card `json:"cards"`
+	Id    *uint64 `json:"id" gorm:"primaryKey;not null"`
+	Title *string `json:"title" gorm:"not null"`
+	Cards []*Card `json:"cards" gorm:"foreignKey:TopicId;references:Id"`
 }
 
 type Question struct {
@@ -14,10 +14,13 @@ type Question struct {
 }
 
 type Card struct {
-	Id       uint64        `json:"id,omitempty"`
-	Score    int32         `json:"score,omitempty"`
-	Opened   bool          `json:"opened"`
-	Bonus    bool          `json:"bonus,omitempty"`
-	Question *Question     `json:"question,omitempty"`
-	Duration time.Duration `json:"duration,omitempty"`
+	Id       *uint64       `json:"id" gorm:"primaryKey;not null"`
+	Score    *int32        `json:"score" gorm:"not null"`
+	Opened   bool          `json:"opened" gorm:"not null"`
+	Bonus    bool          `json:"bonus" gorm:"not null"`
+	Title    *string       `json:"title" gorm:"not null"`
+	TopicId  *uint64       `json:"topic_id" gorm:"foreignKey:TopicId;references:Id;not null"`
+	Topic    *Topic        `json:"topic" gorm:"not null"`
+	ImageUrl *string       `json:"image_url"  gorm:"not null"`
+	Duration time.Duration `json:"duration"  gorm:"not null"`
 }
