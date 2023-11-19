@@ -9,7 +9,6 @@ var TopicModel *gorm.DB
 var TeamModel *gorm.DB
 var ScoreModel *gorm.DB
 var RawModel *gorm.DB
-var QuestionModel *gorm.DB
 var CardModel *gorm.DB
 var TurnedModel *gorm.DB
 
@@ -18,7 +17,6 @@ func assignModel() {
 	TeamModel = DB.Model(new(database.Team))
 	ScoreModel = DB.Model(new(database.Score))
 	RawModel = DB.Model(new(database.Raw))
-	QuestionModel = DB.Model(new(database.Question))
 	CardModel = DB.Model(new(database.Card))
 	TurnedModel = DB.Model(new(database.Turned))
 }

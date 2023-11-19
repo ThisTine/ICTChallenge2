@@ -31,7 +31,6 @@ func Init() (err error) {
 func migrate() error {
 	if err := DB.AutoMigrate(
 		new(database.Card),
-		new(database.Question),
 		new(database.Raw),
 		new(database.Team),
 		new(database.Score),
