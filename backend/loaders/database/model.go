@@ -18,5 +18,5 @@ func assignModel() {
 	ScoreModel = DB.Model(new(database.Score))
 	RawModel = DB.Model(new(database.Raw))
 	CardModel = DB.Model(new(database.Card))
-	TurnedModel = DB.Model(new(database.Turned))
+	TurnedModel = DB.Model(new(database.Turn))
 }

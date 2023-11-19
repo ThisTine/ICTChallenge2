@@ -35,7 +35,7 @@ func migrate() error {
 		new(database.Team),
 		new(database.Score),
 		new(database.Topic),
-		new(database.Turned),
+		new(database.Turn),
 	); err != nil {
 		return err
 	}
