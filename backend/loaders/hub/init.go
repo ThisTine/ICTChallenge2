@@ -68,7 +68,8 @@ func Load() error {
 		Hub.Turned = []*database.Team{
 			Hub.Teams[0],
 		}
-		result := db.DB.Create(&Hub.Teams[0].Id)
+		firstturn := database.Turn{TeamId: &Hub.Teams[0].Id}
+		result := db.DB.Create(&firstturn)
 		if result.Error != nil {
 			return result.Error
 		}
@@ -81,7 +82,6 @@ func Load() error {
 	}
 
 	logger.Log(logrus.Debug, "LOADED HUB DATA")
-
 	return nil
 }
 
