@@ -1,6 +1,7 @@
 package services
 
 import (
+	"backend/utils/value"
 	"math/rand"
 	"sort"
 
@@ -43,7 +44,7 @@ func (s *teamService) GetCurrentScore(team *database.Team) int32 {
 	if len(team.Scores) == 0 {
 		score = 0
 	} else {
-		score = team.Scores[len(team.Scores)-1].Total
+		score = *team.Scores[len(team.Scores)-1].Total
 	}
 	return score
 }
@@ -124,22 +125,17 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 		}
 
 		switch update {
-		case -1:
-			teams[i].Scores = append(teams[i].Scores, &database.Score{
-				Change: -currentCard.Score,
-				Total:  currentScore - currentCard.Score,
-			})
 		case 0:
-			teams[i].Scores = append(teams[i].Scores, &database.Score{Change: 0, Total: currentScore})
+			teams[i].Scores = append(teams[i].Scores, &database.Score{Change: value.Ptr[int32](0), Total: value.Ptr(currentScore)})
 		case 1:
 			change := currentCard.Score
 			if teams[i] == turned[len(turned)-1] && currentCard.Bonus {
-				change *= 2
+				*change *= 2
 			}
 
 			teams[i].Scores = append(teams[i].Scores, &database.Score{
 				Change: change,
-				Total:  currentScore + change,
+				Total:  value.Ptr[int32](currentScore + *change),
 			})
 		}
 	}

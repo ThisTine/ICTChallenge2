@@ -16,7 +16,11 @@ func NewTopicEvent(hub *hub.Model) *topicEvent {
 }
 
 func (r *topicEvent) GetQuestion(card *database.Card) (*database.Question, error) {
-	return card.Question, nil
+	Q := &database.Question{
+		Title:    *card.Title,
+		ImageUrl: *card.ImageUrl,
+	}
+	return Q, nil
 }
 
 func (r *topicEvent) GetTopics() []*database.Topic {

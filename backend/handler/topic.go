@@ -40,7 +40,8 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 		Payload: map[string]any{
 			"card_id":  topics[body.TopicId-1].Cards[body.CardId-1].Id,
 			"topic_id": topics[body.TopicId-1].Id,
-			"question": topics[body.TopicId-1].Cards[body.CardId-1].Question,
+			"title":    topics[body.TopicId-1].Cards[body.CardId-1].Title,
+			"imageUrl": topics[body.TopicId-1].Cards[body.CardId-1].ImageUrl,
 			"bonus":    topics[body.TopicId-1].Cards[body.CardId-1].Bonus,
 		},
 	})
