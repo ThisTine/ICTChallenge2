@@ -1,6 +1,7 @@
 package services
 
 import (
+	db "backend/loaders/database"
 	"backend/repository"
 	"backend/types/database"
 	"backend/types/extend"
@@ -18,7 +19,6 @@ func NewTopicService(topicRepository repository.TopicRepository) *topicService {
 
 func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, error) {
 	topics := s.topicEvent.GetTopics()
-
 	if s.topicEvent.GetCurrentCard() != nil {
 		return nil, &response.Error{
 			Message: "Opened card remaining",
@@ -30,7 +30,8 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, erro
 			Message: "The card has already opened",
 		}
 	}
-
+	//update card
+	db.CardModel.Model(&topics[body.TopicId-1].Cards[body.CardId-1]).Update("opened", true)
 	// hub.Hub.CardProjectorConn.Emit(&message.OutboundMessage{
 	//	Event: message.CardState,
 	//	Payload: map[string]any{

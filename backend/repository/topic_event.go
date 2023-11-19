@@ -1,6 +1,7 @@
 package repository
 
 import (
+	db "backend/loaders/DB"
 	"backend/loaders/hub"
 	"backend/types/database"
 	"backend/types/enum"
@@ -24,10 +25,16 @@ func (r *topicEvent) GetQuestion(card *database.Card) (*database.Question, error
 }
 
 func (r *topicEvent) GetTopics() []*database.Topic {
-	return r.hub.Topics
+	var topics []*database.Topic
+	result := db.TopicModel.Find(&topics)
+	if result.Error != nil {
+		return nil
+	}
+	return topics
 }
 
 func (r *topicEvent) GetCurrentCard() *database.Card {
+	//wait for model
 	return r.hub.CurrentCard
 }
 

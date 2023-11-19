@@ -1,6 +1,7 @@
 package repository
 
 import (
+	"backend/loaders/DB"
 	"backend/loaders/hub"
 	"backend/types/database"
 	"backend/types/extend"
@@ -19,8 +20,14 @@ func (r *teamEvent) GetTeamById(id uint64) *database.Team {
 }
 
 func (r *teamEvent) GetTeams() []*database.Team {
-	return hub.Hub.Teams
+	var teams []*database.Team
+	result := db.TeamModel.Find(&teams)
+	if result.Error != nil {
+		return nil
+	}
+	return teams
 }
+
 
 func (r *teamEvent) GetTurned() []*database.Team {
 	return hub.Hub.Turned

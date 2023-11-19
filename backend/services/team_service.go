@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"sort"
 
+	db "backend/loaders/database"
 	"backend/loaders/hub"
 	"backend/mappers"
 	"backend/repository"
@@ -127,16 +128,19 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 		switch update {
 		case 0:
 			teams[i].Scores = append(teams[i].Scores, &database.Score{Change: value.Ptr[int32](0), Total: value.Ptr(currentScore)})
+			//update db
+			db.TeamModel.Model(teams[i]).Update("scores", teams[i].Scores)
 		case 1:
 			change := currentCard.Score
 			if teams[i] == turned[len(turned)-1] && currentCard.Bonus {
 				*change *= 2
 			}
-
+			//update db
 			teams[i].Scores = append(teams[i].Scores, &database.Score{
 				Change: change,
 				Total:  value.Ptr[int32](currentScore + *change),
 			})
+			db.TeamModel.Model(teams[i]).Update("scores", teams[i].Scores)
 		}
 	}
 
