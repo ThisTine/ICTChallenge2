@@ -5,6 +5,7 @@ import (
 	"math/rand"
 	"sort"
 
+	"backend/loaders/db"
 	"backend/loaders/hub"
 	"backend/mappers"
 	"backend/repository"
@@ -127,16 +128,19 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 		switch update {
 		case 0:
 			teams[i].Scores = append(teams[i].Scores, &database.Score{Change: value.Ptr[int32](0), Total: value.Ptr(currentScore)})
+			//update db
+			db.ScoreModel.Create(&database.Score{Change: value.Ptr[int32](0), Total: value.Ptr(currentScore), TeamId: &teams[i].Id})
 		case 1:
 			change := currentCard.Score
-			if teams[i] == turned[len(turned)-1] && currentCard.Bonus {
+			if teams[i].Id == turned[len(turned)-1].Id && currentCard.Bonus {
 				*change *= 2
 			}
-
 			teams[i].Scores = append(teams[i].Scores, &database.Score{
 				Change: change,
 				Total:  value.Ptr[int32](currentScore + *change),
 			})
+			//update db
+			db.ScoreModel.Create(&database.Score{ Change: change, Total: value.Ptr[int32](currentScore + *change) , TeamId: &teams[i].Id})
 		}
 	}
 
@@ -148,8 +152,10 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 
 func (s *teamService) GetNextTurn() *database.Team {
 	turn := s.teamEvent.GetTurned()
-	if len(turn) == 6 {
+	if len(turn) == 10 {
 		s.teamEvent.SetTurned([]*database.Team{})
+		//delete turned in db
+		db.TurnedModel.Exec("TRUNCATE TABLE turns")
 		turn = []*database.Team{}
 	}
 
@@ -169,6 +175,8 @@ func (s *teamService) GetNextTurn() *database.Team {
 
 	selected := candidates[rand.Intn(len(candidates))]
 	s.teamEvent.SetTurned(append(turn, selected))
+	//add teamid to turned in db
+	db.TurnedModel.Create(&database.Turn{TeamId: &selected.Id})
 
 	return selected
 }

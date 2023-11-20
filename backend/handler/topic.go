@@ -33,7 +33,6 @@ func (h topicHandler) OpenCard(c *fiber.Ctx) error {
 			Err: err,
 		}
 	}
-
 	// CardOpen
 	h.topicService.GetCardConn().Emit(&message.OutboundMessage{
 		Event: message.CardOpen,
