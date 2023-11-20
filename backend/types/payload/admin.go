@@ -3,7 +3,7 @@ package payload
 import "backend/types/enum"
 
 type UpdateScore struct {
-	Update [6]int `json:"update"`
+	Update [10]int `json:"update"`
 }
 
 type LeaderboardMode struct {
