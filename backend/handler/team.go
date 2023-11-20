@@ -35,6 +35,19 @@ func (h *teamHandler) GetAllTeamInfos(c *fiber.Ctx) error {
 	return c.JSON(response.New(teams))
 }
 
+func (h *teamHandler) GetLatestInfo(c *fiber.Ctx) error {
+	score, err := h.teamService.GetLatestScore()
+	if err != nil {
+		return err
+	}
+	return c.JSON(response.New(score))
+}
+
+func (h *teamHandler) GetLatestPodium(c *fiber.Ctx) error {
+	score := h.teamService.GetPodium()
+	return c.JSON(response.New(score))
+}
+
 func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 	var body *payload.UpdateScore
 	if err := c.BodyParser(&body); err != nil {

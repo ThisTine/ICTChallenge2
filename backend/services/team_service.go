@@ -36,7 +36,21 @@ func (s *teamService) GetAllTeamInfos() ([]*payload.TeamInfo, error) {
 			Scores: team.Scores,
 		})
 	}
+	return teamInfos, nil
+}
 
+func (s *teamService) GetLatestScore() ([]*payload.LatestScore, error) {
+	var teamInfos []*payload.LatestScore
+	for _, team := range s.teamEvent.GetTeams() {
+		var total int32
+		total = s.GetCurrentScore(team)
+		teamInfos = append(teamInfos, &payload.LatestScore{
+			Id:     team.Id,
+			Name:   team.Name,
+			Total:  total,
+			Scores: team.Scores,
+		})
+	}
 	return teamInfos, nil
 }
 
@@ -140,7 +154,7 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 				Total:  value.Ptr[int32](currentScore + *change),
 			})
 			//update db
-			db.ScoreModel.Create(&database.Score{ Change: change, Total: value.Ptr[int32](currentScore + *change) , TeamId: &teams[i].Id})
+			db.ScoreModel.Create(&database.Score{Change: change, Total: value.Ptr[int32](currentScore + *change), TeamId: &teams[i].Id})
 		}
 	}
 
