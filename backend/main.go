@@ -1,13 +1,13 @@
 package main
 
 import (
-	db "backend/loaders/database"
+	"backend/loaders/db"
 	"backend/loaders/fiber"
 	"backend/loaders/hub"
 )
 
 func main() {
-	hub.Init()
 	db.Init()
+	hub.Init()
 	fiber.Init()
 }

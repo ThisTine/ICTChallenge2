@@ -1,6 +1,7 @@
 package hub
 
 import (
+	"backend/loaders/db"
 	"encoding/json"
 	"log"
 	"os"
@@ -40,31 +41,50 @@ func Init() {
 		Mode:         enum.ModePreview,
 		PreviewCount: 0,
 	}
-	if err := Load("./data-init.json"); err != nil {
+	if err := Load(); err != nil {
 		logger.Log(logrus.Panic, "UNABLE TO LOAD HUB: "+err.Error())
 	}
 	Watch()
 }
 
-func Load(fn string) error {
+func Load() error {
 	// * Unmarshal file
-	var raw *Model
-	file, _ := os.ReadFile(fn)
-	err := json.Unmarshal(file, &raw)
-	if err != nil {
+	var teams []*database.Team
+	var topic []*database.Topic
+	var turn []*database.Turn
+	if err := db.DB.Find(&topic).Error; err != nil {
 		return err
 	}
-
+	if err := db.DB.Find(&teams).Error; err != nil {
+		return err
+	}
+	if err := db.DB.Find(&turn).Error; err != nil {
+		return err
+	}
 	// * Assign hub
-	Hub.Topics = raw.Topics
-	Hub.Teams = raw.Teams
-
-	if Hub.Turned == nil {
+	Hub.Topics = topic
+	Hub.Teams = teams
+	if len(turn) == 0 {
 		Hub.Turned = []*database.Team{
 			Hub.Teams[0],
 		}
+		firstturn := database.Turn{TeamId: &Hub.Teams[0].Id}
+		result := db.DB.Create(&firstturn)
+		if result.Error != nil {
+			return result.Error
+		}
 	}
-
+	if len(turn) != 0 {
+		var teamturn []*uint64
+		for _, turned := range turn {
+			teamturn = append(teamturn, turned.TeamId)
+		}
+		if err := db.DB.Find(&teams, teamturn).Error; err != nil {
+			return err
+		}
+		Hub.Turned = teams
+	}
+	println(len(Hub.Turned))
 	logger.Log(logrus.Debug, "LOADED HUB DATA")
 
 	return nil
@@ -87,7 +107,7 @@ func Watch() {
 				}
 
 				if event.Has(fsnotify.Write) {
-					if err := Load("./data-reload.json"); err != nil {
+					if err := Load(); err != nil {
 						logger.Log(logrus.Warn, "UNABLE TO LOAD HUB: "+err.Error())
 					}
 				}
