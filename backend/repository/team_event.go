@@ -1,7 +1,7 @@
 package repository
 
 import (
-	"backend/loaders/DB"
+	"backend/loaders/db"
 	"backend/loaders/hub"
 	"backend/types/database"
 	"backend/types/extend"
@@ -26,6 +26,7 @@ func (r *teamEvent) GetTeams() []*database.Team {
 		return nil
 	}
 	return teams
+	// return hub.Hub.Teams
 }
 
 

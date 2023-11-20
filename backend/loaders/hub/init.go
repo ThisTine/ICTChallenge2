@@ -52,18 +52,22 @@ func Load() error {
 	var teams []*database.Team
 	var topic []*database.Topic
 	var turn []*database.Turn
-	if err := db.DB.Find(&topic).Error; err != nil {
+
+	if err := db.TopicModel.Preload("Cards").Find(&topic).Error; err != nil {
 		return err
 	}
-	if err := db.DB.Find(&teams).Error; err != nil {
+
+	if err := db.TeamModel.Preload("Scores").Find(&teams).Error; err != nil {
 		return err
 	}
-	if err := db.DB.Find(&turn).Error; err != nil {
+	if err := db.TurnedModel.Find(&turn).Error; err != nil {
 		return err
 	}
 	// * Assign hub
 	Hub.Topics = topic
 	Hub.Teams = teams
+
+
 	if len(turn) == 0 {
 		Hub.Turned = []*database.Team{
 			Hub.Teams[0],

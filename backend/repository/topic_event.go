@@ -1,11 +1,12 @@
 package repository
 
 import (
-	db "backend/loaders/DB"
+	"backend/loaders/db"
 	"backend/loaders/hub"
 	"backend/types/database"
 	"backend/types/enum"
 	"backend/types/extend"
+
 )
 
 type topicEvent struct {
@@ -34,7 +35,6 @@ func (r *topicEvent) GetTopics() []*database.Topic {
 }
 
 func (r *topicEvent) GetCurrentCard() *database.Card {
-	//wait for model
 	return r.hub.CurrentCard
 }
 
