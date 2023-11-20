@@ -152,10 +152,10 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 
 func (s *teamService) GetNextTurn() *database.Team {
 	turn := s.teamEvent.GetTurned()
-	if len(turn) == 6 {
+	if len(turn) == 10 {
 		s.teamEvent.SetTurned([]*database.Team{})
 		//delete turned in db
-		db.TurnedModel.Exec("TRUNCATE TABLE turneds")
+		db.TurnedModel.Exec("TRUNCATE TABLE turns")
 		turn = []*database.Team{}
 	}
 

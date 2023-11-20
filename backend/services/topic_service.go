@@ -26,8 +26,6 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, erro
 			Message: "Topic not found",
 		}
 	}
-	
-
 	if s.topicEvent.GetCurrentCard() != nil {
 		return nil, &response.Error{
 			Message: "Opened card remaining",
@@ -40,8 +38,14 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, erro
 		}
 	}
 	//update card on db
-	db.CardModel.Model(&topics[body.TopicId-1].Cards[body.CardId-1]).Update("opened", true)
-
+	//chang 3 to 4 if use 4 cards
+	
+	cardId := (body.TopicId * 4) - (4 - body.CardId)
+	card := &database.Card{Id: &cardId}
+	err := db.DB.Model(card).Update("opened", true).Error
+	if err != nil {	
+   	 println("Failed to update card:", err)
+	}
 	s.topicEvent.SetCurrentCard(topics[body.TopicId-1].Cards[body.CardId-1])
 
 	return topics, nil
