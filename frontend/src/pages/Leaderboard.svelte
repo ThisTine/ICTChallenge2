@@ -147,7 +147,7 @@
 </script>
 
 {#if mode === 'leaderboard'}
-	<main class="bg-[#1B2D51] h-auto w-screen px-24 py-12">
+	<main class="bg-[#1B2D51] h-auto w-screen px-24 py-7">
 		<p class="text-white text-5xl font-semibold text-center mt-5">
 			Leaderboard
 		</p>

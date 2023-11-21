@@ -32,17 +32,17 @@
 
 <div
 	style={`animation-duration: ${Math.sqrt(order * 0.5)}s;`}
-	class="flex gap-4 m-10 items-center {init && 'teamCard'} {rest}"
+	class="flex gap-4 m-6 items-center {init && 'teamCard'} {rest}"
 >
 	<div class="w-20">
-		<p class="text-white text-5xl text-center font-semibold">{order}</p>
+		<p class="text-white text-3xl text-center font-semibold">{order}</p>
 	</div>
 	<div
-		class="bg-opacity-20 w-full py-4 pl-16 pr-10 rounded-2xl shadow flex justify-between items-center relative transition-colors {isHighlighted
+		class="bg-opacity-20 w-full py-2 pl-16 pr-10 rounded-2xl shadow flex justify-between items-center relative transition-colors {isHighlighted
 			? 'color'
 			: 'bg-white bg-opacity-20'}"
 	>
-		<div class="text-4xl text-white">
+		<div class="text-2xl text-white">
 			{#if medal !== ''}
 				<img
 					src={medal}
@@ -52,12 +52,12 @@
 			{/if}
 			{name}
 		</div>
-		<div class="flex items-center text-4xl text-white w-40">
+		<div class="flex items-center text-2xl text-white w-40">
 			{#if medal !== ''}
 				<img src={medal} alt="icons-medal" />
 				{score}
 			{:else}
-				<div class="flex items-center w-40 pl-16 h-16">
+				<div class="flex items-center w-40 pl-16 my-2">
 					{score}
 				</div>
 			{/if}
