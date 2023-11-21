@@ -27,10 +27,3 @@ type StudentTurn struct {
 	Current bool              `json:"current"`
 	Topics  []*database.Topic `json:"topics"`
 }
-
-type LatestScore struct {
-	Id     uint64            `json:"id"`
-	Name   string            `json:"name"`
-	Total  int32             `json:"total"`
-	Scores []*database.Score `json:"score"`
-}

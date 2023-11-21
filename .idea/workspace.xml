@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="64d993bc-dade-46ad-abe7-d673ff847a9f" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/handler/team.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/handler/team.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/router/router.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/router/router.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/team.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/team.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/services/team_service.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/services/team_service.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/types/payload/team.go" beforeDir="false" afterPath="$PROJECT_DIR$/backend/types/payload/team.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

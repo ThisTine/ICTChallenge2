@@ -35,14 +35,6 @@ func (h *teamHandler) GetAllTeamInfos(c *fiber.Ctx) error {
 	return c.JSON(response.New(teams))
 }
 
-func (h *teamHandler) GetLatestInfo(c *fiber.Ctx) error {
-	score, err := h.teamService.GetLatestScore()
-	if err != nil {
-		return err
-	}
-	return c.JSON(response.New(score))
-}
-
 func (h *teamHandler) GetLatestLeaderBoard(c *fiber.Ctx) error {
 	rankings := h.teamService.GetRanking()
 	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{

@@ -39,21 +39,6 @@ func (s *teamService) GetAllTeamInfos() ([]*payload.TeamInfo, error) {
 	return teamInfos, nil
 }
 
-func (s *teamService) GetLatestScore() ([]*payload.LatestScore, error) {
-	var teamInfos []*payload.LatestScore
-	for _, team := range s.teamEvent.GetTeams() {
-		var total int32
-		total = s.GetCurrentScore(team)
-		teamInfos = append(teamInfos, &payload.LatestScore{
-			Id:     team.Id,
-			Name:   team.Name,
-			Total:  total,
-			Scores: team.Scores,
-		})
-	}
-	return teamInfos, nil
-}
-
 func (s *teamService) GetCurrentScore(team *database.Team) int32 {
 	var score int32
 	if len(team.Scores) == 0 {
