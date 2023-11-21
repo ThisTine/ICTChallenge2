@@ -57,7 +57,7 @@
 				<img src={medal} alt="icons-medal" />
 				{score}
 			{:else}
-				<div class="flex items-center w-40 pl-16">
+				<div class="flex items-center w-40 pl-16 h-16">
 					{score}
 				</div>
 			{/if}
