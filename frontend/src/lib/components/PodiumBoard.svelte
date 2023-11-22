@@ -7,7 +7,7 @@
 	export let rest: string = ''
 </script>
 
-<div in:scale class="flex gap-5 items-center {rest}">
+<div in:scale class="flex gap-2 items-center {rest}">
 	<div class="w-10">
 		<p class="text-white text-2xl font-semibold">{order}</p>
 	</div>

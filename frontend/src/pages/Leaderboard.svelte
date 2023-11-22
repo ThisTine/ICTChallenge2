@@ -168,9 +168,9 @@
 	>
 		<PodiumSection teams={teamsPodium} />
 		<div
-			class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[421px]"
+			class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[590px]"
 		>
-			<div class="py-10 px-32 flex flex-col gap-10 h-full">
+			<div class=" px-32 flex flex-col gap-3 h-full">
 				{#each teamsBoard as team (team.id)}
 					<PodiumBoard
 						name={team.name}

@@ -4,7 +4,7 @@
 	export let teams: Array<Team>
 </script>
 
-<div class="relative h-[505px] flex justify-center gap-5 items-end">
+<div class="relative h-[490px] flex justify-center gap-5 items-end">
 	<div class="absolute bottom-0 w-screen scale-90">
 		<div
 			class="bg-gradient-to-b from-[rgb(255,255,255,0.08)] to-[rgb(255,255,255,0)] absolute bottom-0 left-1/2 -translate-x-1/2 h-[256px] w-[512px] rounded-t-[384px]"
