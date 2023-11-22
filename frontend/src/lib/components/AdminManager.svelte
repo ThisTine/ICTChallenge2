@@ -132,6 +132,28 @@
 				})
 		}
 	}
+		function dismiss() {
+		return () => {
+		axios
+			.patch('/am/card/dismiss')
+			.then((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'success',
+					title: 'Success',
+					text: res.data?.message,
+				})
+			)
+			.catch((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'error',
+					title: 'Error',
+					text: res.response.data.message,
+				})
+			)
+	}
+}
 </script>
 
 <div
@@ -148,6 +170,11 @@
 			on:click={onSkip}
 			class="ml-3 p-2 px-4 rounded-lg bg-green-900 hover:bg-green-800 font-semi text-white"
 			>Skip
+		</button>
+		<button
+			on:click={dismiss()}
+			class="ml-3 p-2 px-4 rounded-lg bg-red-900 hover:bg-red-800 font-semi text-white"
+			>dismiss
 		</button>
 	</div>
 	<div
