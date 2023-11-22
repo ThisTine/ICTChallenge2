@@ -39,6 +39,7 @@ func Init(router fiber.Router) {
 	admin.Patch("card/skip", teamHandler.SkipCard)
 	admin.Patch("card/pause", teamHandler.PauseCard)
 	admin.Patch("card/dismiss", teamHandler.DismissCard)
+	admin.Put("card/open", topicHandler.OpenCard)
 
 	// * Student
 	student := router.Group("st/", middleware.Auth(config.C.StudentSecret))
