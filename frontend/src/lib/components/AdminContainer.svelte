@@ -187,7 +187,7 @@
 </script>
 
 <div class="flex flex-col p-4 gap-6 h-full w-full">
-	<Modal bind:showModal>
+	<Modal bind:showModal changeQ={onChangeQuestion}>
 		<h2 slot="header" class="text-2xl" style="center ">
 			Choose topic and card
 		</h2>
@@ -210,17 +210,6 @@
 					<option value={4}>4</option>
 					<option value={5}>5</option>
 				</select>
-			</div>
-			<hr class="mt-3 w-full" />
-			<div class="flex justify-center mt-5">
-				<button
-					class="transition-all gap-2 font-semibold text-l items-center justify-between rounded-2xl shadow cursor-pointer p-4 text-white bg-slate-800 hover:bg-slate-900 active:bg-slate-900"
-					autofocus
-					on:click={() => {
-						showModal = false
-						onChangeQuestion()
-					}}>Save</button
-				>
 			</div>
 		</ol>
 	</Modal>

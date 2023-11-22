@@ -1,6 +1,6 @@
 <script>
 	export let showModal // boolean
-
+	export let changeQ
 	let dialog // HTMLDialogElement
 
 	$: if (dialog && showModal) dialog.showModal()
@@ -20,11 +20,24 @@
 				class="ml-10"
 				style="font-size: 30px;"
 				autofocus
-				on:click={() => dialog.close()}>x</button
+				on:click={() => {
+					dialog.close()
+				}}>x</button
 			>
 		</div>
 		<hr />
 		<slot />
+		<hr class="mt-3 w-full" />
+		<div class="flex justify-center mt-5">
+			<button
+				class="transition-all gap-2 font-semibold text-l items-center justify-between rounded-2xl shadow cursor-pointer p-4 text-white bg-slate-800 hover:bg-slate-900 active:bg-slate-900"
+				autofocus
+				on:click={() => {
+					changeQ()
+					dialog.close()
+				}}>Save</button
+			>
+		</div>
 	</div>
 </dialog>
 
