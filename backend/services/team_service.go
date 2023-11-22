@@ -39,6 +39,14 @@ func (s *teamService) GetAllTeamInfos() ([]*payload.TeamInfo, error) {
 	return teamInfos, nil
 }
 
+func (s *teamService) GetCurrentTurnId() uint64 {
+	turn := s.teamEvent.GetTurned()
+	if len(turn) == 0 {
+		return 0
+	}
+	return turn[len(turn)-1].Id
+}
+
 func (s *teamService) GetCurrentScore(team *database.Team) int32 {
 	var score int32
 	if len(team.Scores) == 0 {
@@ -157,6 +165,15 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 	hub.Snapshot()
 
 	return s.GetRanking(), nil
+}
+
+
+func (s *teamService) GetCurrentTurn() *database.Team {
+	turn := s.teamEvent.GetTurned()
+	if len(turn) == 0 {
+		return nil
+	}
+	return turn[len(turn)-1]
 }
 
 func (s *teamService) GetNextTurn() *database.Team {

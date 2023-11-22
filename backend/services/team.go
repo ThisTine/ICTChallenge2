@@ -9,6 +9,7 @@ import (
 
 type TeamService interface {
 	GetAllTeamInfos() ([]*payload.TeamInfo, error)
+	GetCurrentTurnId() uint64
 	GetCurrentScore(team *database.Team) int32
 	GetPodium() []*payload.Podium
 	GetRanking() []*payload.TeamScore
