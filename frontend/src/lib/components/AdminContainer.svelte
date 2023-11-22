@@ -138,7 +138,7 @@
 	function onChangeQuestion() {
 		showModal = false
 		axios
-			.put('/st/open', {
+			.put('/am/card/open', {
 				topic_id: selectedTopic,
 				card_id: selectedCard,
 			})
