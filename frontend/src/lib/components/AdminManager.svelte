@@ -172,15 +172,7 @@
 		</div>
 	</div>
 	<div class="flex-1 h-full flex flex-col">
-		<div class="p-2 mt-4 align-middle items-center justify-center">
-			<button
-				class="p-2 rounded-lg {submitDisabled
-					? 'bg-gray-400'
-					: 'bg-emerald-500'} text-white"
-				on:click={onSubmit}
-				disabled={submitDisabled}>Submit</button
-			>
-		</div>
+
 		<div
 			class="flex-1 w-[calc(80vw-6rem)]"
 			style="overflow-y: hidden; overflow-x: scroll;"
@@ -213,6 +205,15 @@
 					{onScoreChanged}
 				/>
 			{/each}
+					<div class="p-2 mt-4 align-middle items-center justify-center">
+			<button
+				class="p-2 rounded-lg {submitDisabled
+					? 'bg-gray-400'
+					: 'bg-emerald-500'} text-white"
+				on:click={onSubmit}
+				disabled={submitDisabled}>Submit</button
+			>
+		</div>
 		</div>
 	</div>
 </div>
