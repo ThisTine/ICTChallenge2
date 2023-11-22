@@ -147,7 +147,7 @@
 </script>
 
 {#if mode === 'leaderboard'}
-	<main class="bg-[#1B2D51] h-auto w-screen px-24 py-7">
+	<main class="bg-[#1B2D51] h-[1080px] w-screen px-24 py-7">
 		<p class="text-white text-5xl font-semibold text-center mt-5">
 			Leaderboard
 		</p>
@@ -164,7 +164,7 @@
 	</main>
 {:else if mode === 'podium'}
 	<main
-		class="h-screen w-screen overflow-hidden bg-gradient-to-b from-[#3DC3B6] via-[#4F68BF] to-[#1B2D51]"
+		class="h-[1080px] w-screen overflow-hidden bg-gradient-to-b from-[#3DC3B6] via-[#4F68BF] to-[#1B2D51]"
 	>
 		<PodiumSection teams={teamsPodium} />
 		<div
