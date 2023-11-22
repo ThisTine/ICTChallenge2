@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
+	import Swal from 'sweetalert2'
+	import 'sweetalert2/dist/sweetalert2.min.css'
 	import crown from '../../assets/images/icons-medieval-crown.png'
+	import { axios } from '../../utils/api'
 	import AdminPanel from './AdminPanel.svelte'
 	import TeamAction from './TeamAction.svelte'
 	import TeamCard from './TeamCard.svelte'
-	import Swal from 'sweetalert2'
-	import 'sweetalert2/dist/sweetalert2.min.css'
-	import { axios } from '../../utils/api'
-	import { onMount } from 'svelte'
 	let teams: any[] = []
 	let update: any = []
 
@@ -38,6 +38,8 @@
 			})
 			return
 		}
+		console.log(update)
+
 		axios
 			.patch('/am/score', { update })
 			.then((res) => {
@@ -69,6 +71,27 @@
 					text: 'Something went wrong!',
 				})
 			})
+	}
+
+	function onSkip() {
+		axios
+			.patch('/am/card/skip')
+			.then((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'success',
+					title: 'Success',
+					text: res.data?.message,
+				})
+			)
+			.catch((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'error',
+					title: 'Error',
+					text: res.response.data.message,
+				})
+			)
 	}
 
 	$: submitDisabled =
@@ -112,7 +135,7 @@
 </script>
 
 <div
-	class="w-full h-full flex items-stretch "
+	class="w-full h-full flex items-stretch"
 	style="background-color: rgb(248, 251, 253)"
 >
 	<div class="fixed left-0 bottom-0 p-2">
@@ -120,6 +143,11 @@
 			on:click={pause()}
 			class="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 font-semi text-white"
 			>Play/Pause
+		</button>
+		<button
+			on:click={onSkip}
+			class="ml-3 p-2 px-4 rounded-lg bg-gray-900 hover:bg-gray-800 font-semi text-white"
+			>Skip
 		</button>
 	</div>
 	<div
@@ -144,12 +172,21 @@
 		</div>
 	</div>
 	<div class="flex-1 h-full flex flex-col">
+		<div class="p-2 mt-4 align-middle items-center justify-center">
+			<button
+				class="p-2 rounded-lg {submitDisabled
+					? 'bg-gray-400'
+					: 'bg-emerald-500'} text-white"
+				on:click={onSubmit}
+				disabled={submitDisabled}>Submit</button
+			>
+		</div>
 		<div
 			class="flex-1 w-[calc(80vw-6rem)]"
 			style="overflow-y: hidden; overflow-x: scroll;"
 		>
 			<div class="flex flex-row flex-nowrap">
-				{#if teams.length > 0}
+				{#if teams.length > 0 && Array.isArray(teams[0].scores)}
 					{#each teams[0].scores as team, index}
 						<AdminPanel round={index + 1} {teams} />
 					{/each}
@@ -165,8 +202,9 @@
 			class="h-[64px] flex items-center justify-center font-bold text-md gap-2"
 			style="border-bottom: 1px solid rgb(217, 217, 217); "
 		>
-			Round {teams.length > 0 ? teams[0].scores.length + 1 : 1}
+			Round {teams && teams.length != 0 ? teams[0].score.length + 1 : 1}
 		</div>
+
 		<div class="flex-1 flex flex-col">
 			{#each teams as team, index}
 				<TeamAction
@@ -175,15 +213,6 @@
 					{onScoreChanged}
 				/>
 			{/each}
-			<div class="p-2 mt-4">
-				<button
-					class="p-2 rounded-lg {submitDisabled
-						? 'bg-gray-400'
-						: 'bg-emerald-500'} text-white"
-					on:click={onSubmit}
-					disabled={submitDisabled}>Submit</button
-				>
-			</div>
 		</div>
 	</div>
 </div>

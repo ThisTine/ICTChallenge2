@@ -64,12 +64,22 @@ func (s *teamService) GetPodium() []*payload.Podium {
 
 	var rankings []*payload.Podium
 	for _, team := range teams {
-		rankings = append(rankings, &payload.Podium{
-			Id:         team.Id,
-			Name:       team.Name,
-			Score:      s.GetCurrentScore(team),
-			Percentile: float32(s.GetCurrentScore(team)-min) / float32(min+max),
-		})
+		if float32(min+max) != 0 {
+			rankings = append(rankings, &payload.Podium{
+				Id:         team.Id,
+				Name:       team.Name,
+				Score:      s.GetCurrentScore(team),
+				Percentile: float32(s.GetCurrentScore(team)-min) / float32(min+max),
+			})
+		} else {
+			rankings = append(rankings, &payload.Podium{
+				Id:         team.Id,
+				Name:       team.Name,
+				Score:      s.GetCurrentScore(team),
+				Percentile: 0,
+			})
+		}
+
 	}
 
 	sort.Slice(rankings, func(i, j int) bool {
