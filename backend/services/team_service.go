@@ -36,7 +36,6 @@ func (s *teamService) GetAllTeamInfos() ([]*payload.TeamInfo, error) {
 			Scores: team.Scores,
 		})
 	}
-
 	return teamInfos, nil
 }
 
@@ -140,7 +139,7 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 				Total:  value.Ptr[int32](currentScore + *change),
 			})
 			//update db
-			db.ScoreModel.Create(&database.Score{ Change: change, Total: value.Ptr[int32](currentScore + *change) , TeamId: &teams[i].Id})
+			db.ScoreModel.Create(&database.Score{Change: change, Total: value.Ptr[int32](currentScore + *change), TeamId: &teams[i].Id})
 		}
 	}
 

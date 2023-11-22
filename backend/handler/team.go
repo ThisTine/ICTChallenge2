@@ -35,6 +35,17 @@ func (h *teamHandler) GetAllTeamInfos(c *fiber.Ctx) error {
 	return c.JSON(response.New(teams))
 }
 
+func (h *teamHandler) GetLatestLeaderBoard(c *fiber.Ctx) error {
+	rankings := h.teamService.GetRanking()
+	h.teamService.GetLeaderboardConn().Emit(&message.OutboundMessage{
+		Event: message.LeaderboardRanking,
+		Payload: map[string]any{
+			"rankings": rankings,
+		},
+	})
+	return c.JSON(response.New("Refresh score successfully."))
+}
+
 func (h *teamHandler) UpdateScore(c *fiber.Ctx) error {
 	var body *payload.UpdateScore
 	if err := c.BodyParser(&body); err != nil {
