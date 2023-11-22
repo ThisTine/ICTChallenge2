@@ -38,6 +38,8 @@
 			})
 			return
 		}
+		console.log(update)
+
 		axios
 			.patch('/am/score', { update })
 			.then((res) => {
@@ -170,12 +172,21 @@
 		</div>
 	</div>
 	<div class="flex-1 h-full flex flex-col">
+		<div class="p-2 mt-4 align-middle items-center justify-center">
+			<button
+				class="p-2 rounded-lg {submitDisabled
+					? 'bg-gray-400'
+					: 'bg-emerald-500'} text-white"
+				on:click={onSubmit}
+				disabled={submitDisabled}>Submit</button
+			>
+		</div>
 		<div
 			class="flex-1 w-[calc(80vw-6rem)]"
 			style="overflow-y: hidden; overflow-x: scroll;"
 		>
 			<div class="flex flex-row flex-nowrap">
-				{#if teams.length > 0}
+				{#if teams.length > 0 && Array.isArray(teams[0].scores)}
 					{#each teams[0].scores as team, index}
 						<AdminPanel round={index + 1} {teams} />
 					{/each}
@@ -191,8 +202,9 @@
 			class="h-[64px] flex items-center justify-center font-bold text-md gap-2"
 			style="border-bottom: 1px solid rgb(217, 217, 217); "
 		>
-			Round {teams.length > 0 ? teams[0].scores.length + 1 : 1}
+			Round {teams && teams.length != 0 ? teams[0].score.length + 1 : 1}
 		</div>
+
 		<div class="flex-1 flex flex-col">
 			{#each teams as team, index}
 				<TeamAction
@@ -201,15 +213,6 @@
 					{onScoreChanged}
 				/>
 			{/each}
-			<div class="p-2 mt-4">
-				<button
-					class="p-2 rounded-lg {submitDisabled
-						? 'bg-gray-400'
-						: 'bg-emerald-500'} text-white"
-					on:click={onSubmit}
-					disabled={submitDisabled}>Submit</button
-				>
-			</div>
 		</div>
 	</div>
 </div>
