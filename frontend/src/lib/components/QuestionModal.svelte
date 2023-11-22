@@ -56,18 +56,18 @@
 			class="h-[850px] px-[200px] text-center leading-[96px] flex flex-col justify-center items-center z-50"
 		>
 			<p
-				class="text-white {openQuestion.question.title.length < 100
+				class="text-white {openQuestion.title.length < 100
 					? 'text-[60px]'
-					: openQuestion.question.title.length > 160
+					: openQuestion.title.length > 160
 					? 'text-[36px]'
 					: 'text-[48px]'} font-semibold z-50"
 			>
-				{@html openQuestion.question.title}
+				{@html openQuestion.title}
 			</p>
 
-			{#if openQuestion.question.image_url != ''}
+			{#if openQuestion.imageUrl != ''}
 				<div class="w-3/4 flex justify-center">
-					<img src={openQuestion.question.image_url} alt="img" />
+					<img src={openQuestion.imageUrl} alt="img" />
 				</div>
 			{/if}
 		</div>
