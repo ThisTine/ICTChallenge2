@@ -1,12 +1,12 @@
 <script lang="ts">
+	import { onMount } from 'svelte'
+	import Swal from 'sweetalert2'
+	import 'sweetalert2/dist/sweetalert2.min.css'
 	import crown from '../../assets/images/icons-medieval-crown.png'
+	import { axios } from '../../utils/api'
 	import AdminPanel from './AdminPanel.svelte'
 	import TeamAction from './TeamAction.svelte'
 	import TeamCard from './TeamCard.svelte'
-	import Swal from 'sweetalert2'
-	import 'sweetalert2/dist/sweetalert2.min.css'
-	import { axios } from '../../utils/api'
-	import { onMount } from 'svelte'
 	let teams: any[] = []
 	let update: any = []
 
@@ -71,6 +71,27 @@
 			})
 	}
 
+	function onSkip() {
+		axios
+			.patch('/am/card/skip')
+			.then((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'success',
+					title: 'Success',
+					text: res.data?.message,
+				})
+			)
+			.catch((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'error',
+					title: 'Error',
+					text: res.response.data.message,
+				})
+			)
+	}
+
 	$: submitDisabled =
 		update.length !== teams.length || update.some((e) => e === null)
 
@@ -112,7 +133,7 @@
 </script>
 
 <div
-	class="w-full h-full flex items-stretch "
+	class="w-full h-full flex items-stretch"
 	style="background-color: rgb(248, 251, 253)"
 >
 	<div class="fixed left-0 bottom-0 p-2">
@@ -120,6 +141,11 @@
 			on:click={pause()}
 			class="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 font-semi text-white"
 			>Play/Pause
+		</button>
+		<button
+			on:click={onSkip}
+			class="ml-3 p-2 px-4 rounded-lg bg-gray-900 hover:bg-gray-800 font-semi text-white"
+			>Skip
 		</button>
 	</div>
 	<div
