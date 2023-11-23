@@ -37,12 +37,11 @@
 	const unsubscribeclient2 = client.subscribe('cd/open', (payload) => {
 		openQuestion = payload
 		handleOpenModal(payload.question_id, cardIndex)
-		console.log(payload);
+		console.log(payload)
 		console.log(payload.imageUrl)
-		
 	})
 	const unsubscribeclient3 = client.subscribe('cd/countdown', (payload) => {
-		console.log(payload);
+		console.log(payload)
 		minute = payload.m
 		sec = payload.s
 		socketRetrieve = true
@@ -105,6 +104,7 @@
 								img={icon}
 								score={card.score}
 								textColor={'text-color-' + (colIndex + 1)}
+								cardNumber={i + 1}
 								{widthCard}
 								{heightCard}
 								{widthImg}
