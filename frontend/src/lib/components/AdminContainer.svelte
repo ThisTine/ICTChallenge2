@@ -6,6 +6,7 @@
 	import icons1st from '../../assets/images/icons-1stmedal-64.png'
 	import iconsCrystal from '../../assets/images/icons-crystal.png'
 	import crown from '../../assets/images/icons-medieval-crown.png'
+	import random from '../../assets/images/random.png'
 	import score from '../../assets/images/score.png'
 	import { axios } from '../../utils/api'
 	import Modal from './Modal.svelte'
@@ -184,6 +185,28 @@
 				})
 			})
 	}
+	function onRandom() {
+		axios
+			.patch('/am/highlight')
+			.then((res) => {
+				Swal.fire({
+					timer: 500,
+					icon: 'success',
+					title: 'Success',
+					text: res.data.message,
+				})
+			})
+			.catch((res) => {
+				// console.log(res.);
+
+				Swal.fire({
+					timer: 500,
+					icon: 'error',
+					title: 'Error',
+					text: res.response.data.message,
+				})
+			})
+	}
 </script>
 
 <div class="flex flex-col p-4 gap-6 h-full w-full">
@@ -305,6 +328,15 @@
 		>
 			<img width={32} height={32} src={score} alt="icons-crown" />
 			Refresh Score
+		</button>
+		<button
+			class="{show === 0
+				? 'opacity-100'
+				: 'opacity-70'} transition-all flex gap-2 font-semibold text-2xl items-center justify-between rounded-2xl shadow cursor-pointer p-6 text-white bg-slate-800 hover:bg-slate-900 active:bg-slate-900"
+			on:click={onRandom}
+		>
+			<img width={32} height={32} src={random} alt="icons-crown" />
+			Random Team
 		</button>
 	</div>
 </div>
