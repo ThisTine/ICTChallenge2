@@ -30,9 +30,9 @@
 		<div
 			class="w-16 h-16 absolute -left-2 -top-2 rounded-lg flex flex-col justify-center items-center {cardNumber ==
 			1
-				? 'bg-indigo-500'
-				: cardNumber == 2 || cardNumber == 3
 				? 'bg-green-500'
+				: cardNumber == 2 || cardNumber == 3
+				? 'bg-indigo-500'
 				: cardNumber == 4
 				? 'bg-red-500'
 				: ''}"
