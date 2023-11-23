@@ -30,7 +30,7 @@
 		axios.get('/am/info').then((res) => {
 			teams = res.data?.data
 			console.log(teams)
-			update = teams.map((e) => null)
+			update = teams.map((e) => 0)
 		})
 	}
 

@@ -219,11 +219,11 @@
 			<div class="flex justify-center">
 				<label class="text-xl mr-2" for="cars">Topic:</label>
 				<select bind:value={selectedTopic} class="mr-3">
-					<option value={1}>1</option>
-					<option value={2}>2</option>
-					<option value={3}>3</option>
-					<option value={4}>4</option>
-					<option value={5}>5</option>
+					<option value={1}>General</option>
+					<option value={2}>Network</option>
+					<option value={3}>Algorithm</option>
+					<option value={4}>Infrastructure</option>
+					<option value={5}>Smart system</option>
 				</select>
 				<label class="text-xl mr-2" for="cars">Card:</label>
 				<select bind:value={selectedCard}>
@@ -231,7 +231,6 @@
 					<option value={2}>2</option>
 					<option value={3}>3</option>
 					<option value={4}>4</option>
-					<option value={5}>5</option>
 				</select>
 			</div>
 		</ol>

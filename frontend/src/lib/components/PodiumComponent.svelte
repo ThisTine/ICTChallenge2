@@ -7,6 +7,7 @@
 	import { Lottie } from 'lottie-svelte'
 	import { onMount } from 'svelte'
 	import { tweened } from 'svelte/motion'
+	import pointsound from '../../assets/audio/pointsound.mp3'
 	export let order: number
 	export let score: number
 	export let team: string
@@ -18,6 +19,7 @@
 	let rankingIcon: string
 	let init: boolean = false
 	let showLabel: boolean = false
+	let PS = new Audio(pointsound)
 	const tweenedScore = tweened(0, { duration: 2000 })
 
 	onMount(() => {
@@ -48,6 +50,7 @@
 		setTimeout(() => {
 			init = true
 			setTimeout(() => {
+				PS.play()
 				showLabel = true
 				tweenedScore.set(score)
 			}, 3000) // 3000
