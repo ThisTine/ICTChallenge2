@@ -10,6 +10,7 @@
 	export let heightCard: string
 	export let widthImg: string
 	export let textSize: string
+	export let cardNumber: number
 	export let handleFlipCard: (
 		topicId: number,
 		cardId: number
@@ -26,6 +27,31 @@
 			handleFlipCard(topicId, cardId)
 		}}
 	>
+		<div
+			class="w-16 h-16 absolute -left-2 -top-2 rounded-lg flex flex-col justify-center items-center {cardNumber ==
+			1
+				? 'bg-indigo-500'
+				: cardNumber == 2 || cardNumber == 3
+				? 'bg-green-500'
+				: cardNumber == 4
+				? 'bg-red-500'
+				: ''}"
+		>
+			<p class="font-semibold text-white text-2xl">{cardNumber}</p>
+		</div>
+		<!-- {#if score == 100}
+			<p class="font-semibold {textColor}" style="font-size: 1rem">
+				Easy
+			</p>
+		{:else if score == 200}
+			<p class="font-semibold {textColor}" style="font-size: 1rem">
+				Medium
+			</p>
+		{:else if score == 300}
+			<p class="font-semibold {textColor}" style="font-size: 1rem">
+				Hard
+			</p>
+		{/if} -->
 		<img
 			src={img}
 			alt="logo"

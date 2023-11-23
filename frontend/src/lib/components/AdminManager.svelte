@@ -10,6 +10,7 @@
 	let teams: any[] = []
 	let update: any = []
 	let turn: number = 0
+	let isPaused: boolean = false
 
 	function fetchTurn() {
 		axios.get('/am/turn').then((res) => {
@@ -92,6 +93,15 @@
 	}
 
 	function onSkip() {
+		if (isPaused) {
+			Swal.fire({
+				timer: 2000,
+				icon: 'error',
+				title: 'Error',
+				text: 'Game is paused! Please resume the game first!',
+			})
+			return
+		}
 		axios
 			.patch('/am/card/skip')
 			.then((res) =>
@@ -127,8 +137,7 @@
 							title: 'Success',
 							text: res.data?.message,
 						}).then(() => {
-							update.length = 0
-							console.log('clear update')
+							isPaused = !isPaused
 						})
 					} else {
 						Swal.fire({
@@ -151,6 +160,16 @@
 		}
 	}
 	function dismiss() {
+		if (isPaused) {
+			Swal.fire({
+				timer: 2000,
+				icon: 'error',
+				title: 'Error',
+				text: 'Game is paused! Please resume the game first!',
+			})
+			return
+		}
+
 		return () => {
 			axios
 				.patch('/am/card/dismiss')
