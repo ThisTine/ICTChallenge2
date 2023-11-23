@@ -9,6 +9,22 @@
 	import TeamCard from './TeamCard.svelte'
 	let teams: any[] = []
 	let update: any = []
+	let turn: number = 0
+
+	function fetchTurn() {
+		axios.get('/am/turn').then((res) => {
+			console.log(res.data?.data)
+			if (res.data?.data === 0) {
+				Swal.fire({
+					timer: 2000,
+					icon: 'error',
+					title: 'Error',
+					text: 'Game is not started yet!',
+				})
+			}
+			turn = res.data?.data
+		})
+	}
 
 	function fetchInfo() {
 		axios.get('/am/info').then((res) => {
@@ -20,6 +36,7 @@
 
 	onMount(() => {
 		fetchInfo()
+		fetchTurn()
 	})
 
 	function onScoreChanged(id: number, score: number) {
@@ -62,6 +79,7 @@
 					})
 				}
 				fetchInfo()
+				fetchTurn()
 			})
 			.catch((res) => {
 				Swal.fire({
@@ -132,28 +150,28 @@
 				})
 		}
 	}
-		function dismiss() {
+	function dismiss() {
 		return () => {
-		axios
-			.patch('/am/card/dismiss')
-			.then((res) =>
-				Swal.fire({
-					timer: 2000,
-					icon: 'success',
-					title: 'Success',
-					text: res.data?.message,
-				})
-			)
-			.catch((res) =>
-				Swal.fire({
-					timer: 2000,
-					icon: 'error',
-					title: 'Error',
-					text: res.response.data.message,
-				})
-			)
+			axios
+				.patch('/am/card/dismiss')
+				.then((res) =>
+					Swal.fire({
+						timer: 2000,
+						icon: 'success',
+						title: 'Success',
+						text: res.data?.message,
+					})
+				)
+				.catch((res) =>
+					Swal.fire({
+						timer: 2000,
+						icon: 'error',
+						title: 'Error',
+						text: res.response.data.message,
+					})
+				)
+		}
 	}
-}
 </script>
 
 <div
@@ -198,8 +216,17 @@
 			{/each}
 		</div>
 	</div>
-	<div class="flex-1 h-full flex flex-col">
 
+	<div class="flex-1 h-full flex flex-col">
+		<div class="flex flex-col justify-center h-full w-full items-center">
+			<span class="text-6xl font-semibold">Turn</span>
+			{#each teams as team}
+				{#if team.id == turn}
+					<span class="text-4xl">Name: {team.name}</span>
+					<span class="text-4xl">School: {team.school}</span>
+				{/if}
+			{/each}
+		</div>
 		<div
 			class="flex-1 w-[calc(80vw-6rem)]"
 			style="overflow-y: hidden; overflow-x: scroll;"
@@ -232,15 +259,15 @@
 					{onScoreChanged}
 				/>
 			{/each}
-					<div class="p-2 mt-4 align-middle items-center justify-center">
-			<button
-				class="p-2 rounded-lg {submitDisabled
-					? 'bg-gray-400'
-					: 'bg-emerald-500'} text-white"
-				on:click={onSubmit}
-				disabled={submitDisabled}>Submit</button
-			>
-		</div>
+			<div class="p-2 mt-4 align-middle items-center justify-center">
+				<button
+					class="p-2 rounded-lg {submitDisabled
+						? 'bg-gray-400'
+						: 'bg-emerald-500'} text-white"
+					on:click={onSubmit}
+					disabled={submitDisabled}>Submit</button
+				>
+			</div>
 		</div>
 	</div>
 </div>

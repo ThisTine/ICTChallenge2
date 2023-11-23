@@ -31,6 +31,7 @@ func Init(router fiber.Router) {
 	admin := router.Group("am/", middleware.Auth(config.C.AdminSecret))
 	admin.Get("info", teamHandler.GetAllTeamInfos)
 	admin.Get("refresh/leaderboard", teamHandler.GetLatestLeaderBoard)
+	admin.Get("turn", teamHandler.GetTurn)
 	admin.Patch("preview/increment", teamHandler.IncrementPreview)
 	admin.Patch("highlight", teamHandler.Highlight)
 	admin.Patch("score", teamHandler.UpdateScore)
