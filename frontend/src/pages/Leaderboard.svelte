@@ -4,14 +4,17 @@
 	import PodiumSection from 'src/lib/components/PodiumSection.svelte'
 	import { ArtWS } from 'src/store/websocket'
 	import type { Team } from 'src/types/leaderboard'
-	import { onDestroy } from 'svelte'
+	import { onDestroy, onMount } from 'svelte'
 	import { flip } from 'svelte/animate'
 	import Preview from './Preview.svelte'
 	import { urlParser } from '../utils/urlParser'
+	import randomSound from 'src/assets/audio/randomsound.mp3'
+	
 
 	let mode = 'preview'
 	let teams: Array<Team> = []
 	let previewTeams: Array<Team> = []
+	let RDS = new Audio(randomSound);
 
 	let teamsPodium: Array<Team> = []
 	let teamsBoard: Array<Team> = []
@@ -24,7 +27,8 @@
 			name: 'client', // Name for the client
 		}
 	)
-
+		
+		
 	const unsubscribeclient1 = client.subscribe('lb/state', (payload) => {
 		mode = 'leaderboard'
 		if (teams.length === 0) {
@@ -72,6 +76,8 @@
 		}
 	})
 
+	$:console.log(teams)
+
 	const unsubscribeclient6 = client.subscribe('lb/highlighted', (payload) => {
 		mode = 'leaderboard'
 		resetHighlighted()
@@ -98,16 +104,16 @@
 	}
 
 	function randomTeam(id: number) {
+		RDS.play();
 		var random = setInterval(() => {
 			let random = Math.floor(Math.random() * teams.length)
 			resetHighlighted()
 			teams[random].isHighlighted = true
-		}, 250)
+		}, 100)
 
 		setTimeout(() => {
 			clearInterval(random)
 			resetHighlighted()
-
 			teams.find((el) => el.id === id).isHighlighted = true
 		}, 5000)
 	}
@@ -148,6 +154,7 @@
 
 {#if mode === 'leaderboard'}
 	<main class="bg-[#1B2D51] h-[1080px] w-screen px-24 py-7">
+		
 		<p class="text-white text-5xl font-semibold text-center mt-5">
 			Leaderboard
 		</p>
@@ -166,12 +173,13 @@
 	<main
 		class="h-[1080px] w-screen overflow-hidden bg-gradient-to-b from-[#3DC3B6] via-[#4F68BF] to-[#1B2D51]"
 	>
+
 		<PodiumSection teams={teamsPodium} />
 		<div
 			class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[590px]"
 		>
-			<div class=" px-32 flex flex-col gap-3 h-full">
-				{#each teamsBoard as team (team.id)}
+				<div class=" px-32 flex flex-col gap-3 h-full">
+				{#each teamsBoard as team (team.name)}
 					<PodiumBoard
 						name={team.name}
 						order={team.rank}
