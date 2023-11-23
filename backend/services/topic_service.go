@@ -2,7 +2,6 @@ package services
 
 import (
 	"backend/loaders/db"
-	"backend/loaders/hub"
 	"backend/repository"
 	"backend/types/database"
 	"backend/types/extend"
@@ -18,9 +17,6 @@ func NewTopicService(topicRepository repository.TopicRepository) *topicService {
 	return &topicService{topicEvent: topicRepository}
 }
 func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, error) {
-	go func() {
-		hub.Skip <- false
-	}()
 	topics := s.topicEvent.GetTopics()
 
 	//handle Topic not found
