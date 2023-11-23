@@ -13,7 +13,6 @@ var Pause = make(chan bool)
 
 func StartInterval(card *database.Card) {
 	ticker := time.NewTicker(1 * time.Second)
-
 	Hub.CardProjectorConn.Emit(&message.OutboundMessage{
 		Event: message.CardCountdown,
 		Payload: map[string]any{
