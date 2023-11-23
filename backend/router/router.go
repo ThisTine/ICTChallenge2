@@ -38,6 +38,7 @@ func Init(router fiber.Router) {
 	admin.Patch("end", teamHandler.EndGame)
 	admin.Patch("mode", teamHandler.SetLeaderboardMode)
 	admin.Patch("card/skip", teamHandler.SkipCard)
+	admin.Patch("card/resetskip", teamHandler.ResetSkip)
 	admin.Patch("card/pause", teamHandler.PauseCard)
 	admin.Patch("card/dismiss", teamHandler.DismissCard)
 	admin.Put("card/open", topicHandler.OpenCard)

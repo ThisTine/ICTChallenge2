@@ -22,9 +22,6 @@ func NewTeamHandler(teamService services.TeamService, topicService services.Topi
 	return teamHandler{teamService: teamService, topicService: topicService}
 }
 
-
-
-
 func (h *teamHandler) GetTeam(c *fiber.Ctx) error {
 
 	return nil
@@ -125,6 +122,11 @@ func (h *teamHandler) IncrementPreview(c *fiber.Ctx) error {
 func (h *teamHandler) SkipCard(c *fiber.Ctx) error {
 	hub.Skip <- true
 	return c.JSON(response.New("Successfully skip the card"))
+}
+
+func (h *teamHandler) ResetSkip(c *fiber.Ctx) error {
+	hub.Skip <- false
+	return c.JSON(response.New("Successfully reset skip"))
 }
 
 func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
