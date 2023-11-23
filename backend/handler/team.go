@@ -124,11 +124,6 @@ func (h *teamHandler) SkipCard(c *fiber.Ctx) error {
 	return c.JSON(response.New("Successfully skip the card"))
 }
 
-func (h *teamHandler) ResetSkip(c *fiber.Ctx) error {
-	hub.Skip <- false
-	return c.JSON(response.New("Successfully reset skip"))
-}
-
 func (h *teamHandler) PauseCard(c *fiber.Ctx) error {
 	hub.Pause <- true
 	return c.JSON(response.New("Successfully toggle card pausing"))
@@ -151,7 +146,6 @@ func (h *teamHandler) DismissCard(c *fiber.Ctx) error {
 			"topics": updatedTopics,
 		},
 	})
-
 	return c.JSON(response.New("Successfully dismiss the card"))
 }
 
