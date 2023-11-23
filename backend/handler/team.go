@@ -22,9 +22,17 @@ func NewTeamHandler(teamService services.TeamService, topicService services.Topi
 	return teamHandler{teamService: teamService, topicService: topicService}
 }
 
+
+
+
 func (h *teamHandler) GetTeam(c *fiber.Ctx) error {
 
 	return nil
+}
+
+func (h *teamHandler) GetTurn(c *fiber.Ctx) error {
+	turn := h.teamService.GetCurrentTurnId()
+	return c.JSON(response.New(turn))
 }
 
 func (h *teamHandler) GetAllTeamInfos(c *fiber.Ctx) error {
