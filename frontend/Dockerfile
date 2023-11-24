@@ -1,4 +1,4 @@
-FROM node:18 as builder
+FROM --platform=linux/amd64 node:18 as builder
 
 WORKDIR /app
 
@@ -8,7 +8,7 @@ RUN npm install
 
 RUN npm run build
 
-FROM thistine/simple-http-server as runner
+FROM --platform=linux/amd64 thistine/simple-http-server as runner
 
 WORKDIR /app
 
