@@ -1,0 +1,9 @@
+version: '3'
+
+services:
+  runner:
+    platform: linux/amd64
+    image: registry.thistine.com/ict-prod-front:main
+    restart: always
+    ports:
+      - "8080:4000"
