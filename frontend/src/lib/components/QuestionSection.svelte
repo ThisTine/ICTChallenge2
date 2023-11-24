@@ -14,6 +14,8 @@
 	import FlippedCard from './FlippedCard.svelte'
 
 	import { onDestroy } from 'svelte'
+	import { axios } from '../../utils/api'
+	import Swal from 'sweetalert2'
 
 	let showModal = false
 	let cardId: number
@@ -23,6 +25,7 @@
 	let minute = 0
 	let sec = 0
 	let socketRetrieve: boolean = false
+	let first = true
 	export let question: Topic
 	export let colIndex: number
 	export let openQuestion: OpenQuestion
@@ -45,7 +48,18 @@
 		minute = payload.m
 		sec = payload.s
 		socketRetrieve = true
-	})
+		if(first){
+		axios
+			.patch('/am/card/pause')
+			.then((res) => {
+				console.log('pause time sucess')
+				first = !first
+			})
+			.catch((err) => {
+				console.log(err)
+			})
+		}
+		})
 
 	onDestroy(() => {
 		unsubscribeclient2()
