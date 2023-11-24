@@ -85,6 +85,7 @@
 								{handleFlipCard}
 								cardId={card.id}
 								topicId={$selected + 1}
+								cardNumber={card.id}
 							/>
 						</div>
 						<div

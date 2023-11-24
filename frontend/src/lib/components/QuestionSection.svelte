@@ -31,7 +31,7 @@
 	export let client
 
 	const widthCard: string = '324px'
-	const heightCard: string = '180px'
+	const heightCard: string = '150px'
 	const widthImg: string = '88px'
 	const textSize: string = '40px'
 	const iconSize: string = '120px'
@@ -135,7 +135,7 @@
 	<div class="h-[620px] flex flex-col justify-between">
 		{#each question.cards as card, i (i)}
 			<div class={card.opened && 'flipped'}>
-				<div class="flip-card">
+				<div class="flip-card mb-40">
 					<div class="flip-card-inner">
 						<div class="flip-card-front">
 							<QuestionCard

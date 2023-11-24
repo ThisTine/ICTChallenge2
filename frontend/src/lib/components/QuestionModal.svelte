@@ -71,13 +71,13 @@
 				</div>
 			{/if}
 		</div>
-		<div class="flex justify-center z-50">
+		<div class="flex justify-end z-50 self-end mr-8 mb-8">
 			<div
 				class="h-[96px] flex flex-row justify-end items-end text-white font-medium"
 			>
-				<div class=" flex justify-center">
+				<div class=" flex justify-end">
 					<div
-						class="rounded-[20px] h-[90px] flex items-center timer-bg"
+						class="rounded-[20px] h-[90px] flex items-end timer-bg"
 					>
 						<p class="text-[48px] px-6 text-center" id="timer">
 							{minute} : {sec > 9 ? sec : '0' + sec}

@@ -21,7 +21,7 @@
 
 <div>
 	<div
-		class="bg-white rounded-2xl flex flex-col justify-center items-center"
+		class="bg-white rounded-2xl flex flex-col justify-center items-center "
 		style="width: {widthCard}; height: {heightCard}"
 		on:click={() => {
 			handleFlipCard(topicId, cardId)
@@ -33,11 +33,11 @@
 				? 'bg-green-500'
 				: cardNumber == 2 || cardNumber == 3
 				? 'bg-indigo-500'
-				: cardNumber == 4
+				: cardNumber == 4 || cardNumber == 5
 				? 'bg-red-500'
 				: ''}"
 		>
-			<p class="font-semibold text-white text-2xl">{cardNumber}</p>
+			<p class="font-semibold text-white text-3xl">{cardNumber}</p>
 		</div>
 		<!-- {#if score == 100}
 			<p class="font-semibold {textColor}" style="font-size: 1rem">
