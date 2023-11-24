@@ -42,7 +42,7 @@
 	<div
 		class="z-50 w-[1600px] h-[972px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto {timerFinish
 			? 'question-bg-color-finish'
-			: 'question-bg-color'} rounded-[36px] shadow-xl items-center"
+			: 'question-bg-color'} rounded-[36px] shadow-xl items-center p-10"
 		style={openQuestion.bonus
 			? 'box-shadow: inset 0 0 20px 0 rgba(255, 255, 255, 1);'
 			: ''}
@@ -71,13 +71,13 @@
 				</div>
 			{/if}
 		</div>
-		<div class="flex justify-center z-50">
+		<div class="flex justify-end z-50 self-end">
 			<div
 				class="h-[96px] flex flex-row justify-end items-end text-white font-medium"
 			>
-				<div class=" flex justify-center">
+				<div class=" flex justify-end">
 					<div
-						class="rounded-[20px] h-[90px] flex items-center timer-bg"
+						class="rounded-[20px] h-[90px] flex items-end timer-bg"
 					>
 						<p class="text-[48px] px-6 text-center" id="timer">
 							{minute} : {sec > 9 ? sec : '0' + sec}
