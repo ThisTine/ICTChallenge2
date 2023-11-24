@@ -38,7 +38,7 @@ class WebSocketInstance {
 
 	private isDev = false
 	private name = 'ws'
-	private url = 'ws://localhost:8080'
+	private url = 'ws://localhost:3000'
 	private reconnect = false
 	private reconnectInterval = 1000
 	private static websocketId = 0
