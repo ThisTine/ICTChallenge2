@@ -97,7 +97,7 @@
 	<div class="h-[620px] flex flex-col justify-between">
 		{#each question.cards as card, i (i)}
 			<div class={card.opened && 'flipped'}>
-				<div class="flip-card mb-48">
+				<div class="flip-card mb-40">
 					<div class="flip-card-inner">
 						<div class="flip-card-front">
 							<QuestionCard

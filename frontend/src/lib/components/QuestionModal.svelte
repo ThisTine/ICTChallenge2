@@ -71,7 +71,7 @@
 				</div>
 			{/if}
 		</div>
-		<div class="flex justify-end z-50 self-end">
+		<div class="flex justify-end z-50 self-end mr-8 mb-8">
 			<div
 				class="h-[96px] flex flex-row justify-end items-end text-white font-medium"
 			>
