@@ -39,7 +39,7 @@ func (s *topicService) OpenCard(body *payload.OpenCard) ([]*database.Topic, erro
 	//update card on db
 	//chang 3 to 4 if use 4 cards
 
-	cardId := (body.TopicId * 4) - (4 - body.CardId)
+	cardId := (body.TopicId * 5) - (5 - body.CardId)
 	card := &database.Card{Id: &cardId}
 	err := db.DB.Model(card).Update("opened", true).Error
 	if err != nil {
