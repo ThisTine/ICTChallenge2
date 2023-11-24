@@ -14,6 +14,8 @@
 	import FlippedCard from './FlippedCard.svelte'
 
 	import { onDestroy } from 'svelte'
+	import axios from 'axios'
+	import Swal from 'sweetalert2'
 
 	let showModal = false
 	let cardId: number
@@ -45,6 +47,42 @@
 		minute = payload.m
 		sec = payload.s
 		socketRetrieve = true
+		let first = true
+		if (first) {
+			function pause() {
+				return () => {
+					axios
+						.patch('/am/card/pause')
+						.then((res) => {
+							// if (res.data?.success) {
+							// 	Swal.fire({
+							// 		timer: 2000,
+							// 		icon: 'success',
+							// 		title: 'Success',
+							// 		text: res.data?.message,
+							// 	}).then(() => {
+							console.log('pause time sucess')
+							// 	})
+							// } else {
+							// 	Swal.fire({
+							// 		timer: 2000,
+							// 		icon: 'error',
+							// 		title: 'Error',
+							// 		text: res.data?.message,
+							// 	})
+							// }
+						})
+						.catch((res) => {
+							Swal.fire({
+								timer: 2000,
+								icon: 'error',
+								title: 'Error',
+								text: 'Something went wrong!',
+							})
+						})
+				}
+			}
+		}
 	})
 
 	onDestroy(() => {
