@@ -42,7 +42,7 @@
 	<div
 		class="z-50 w-[1600px] h-[972px] modal-container-slide-in ml-20 flex flex-col mx-auto absolute overflow-y-auto {timerFinish
 			? 'question-bg-color-finish'
-			: 'question-bg-color'} rounded-[36px] shadow-xl items-center p-10"
+			: 'question-bg-color'} rounded-[36px] shadow-xl items-center"
 		style={openQuestion.bonus
 			? 'box-shadow: inset 0 0 20px 0 rgba(255, 255, 255, 1);'
 			: ''}
