@@ -213,7 +213,25 @@ func (s *teamService) GetNextTurn() *database.Team {
 		var finalCandidate = hub.Hub.FinalCandidates
 		
 		if len(finalCandidate) == 0 {
-			return nil
+			//handle in case no team has smae highest score but want to play more
+			var candidate []*database.Team
+			for _, team := range s.teamEvent.GetTeams() {
+				exist := false
+				for _, t := range turn {
+					if team.Id == t.Id {
+						exist = true
+						break
+					}
+				}
+				if !exist {
+					candidate = append(candidate, team)
+				}
+			}
+			selected := candidate[rand.Intn(len(candidate))]
+			s.teamEvent.SetTurned(append(turn, selected))
+			//add teamid to turned in db
+			db.TurnedModel.Create(&database.Turn{TeamId: &selected.Id})
+			return selected
 		}
 		if len(turn) == len(finalCandidate) {
 			s.teamEvent.SetTurned([]*database.Team{})
