@@ -40,6 +40,7 @@ func Init() {
 		StudentConns: nil,
 		Mode:         enum.ModePreview,
 		PreviewCount: 0,
+		FinalCandidates: nil,
 	}
 	if err := Load(); err != nil {
 		logger.Log(logrus.Panic, "UNABLE TO LOAD HUB: "+err.Error())

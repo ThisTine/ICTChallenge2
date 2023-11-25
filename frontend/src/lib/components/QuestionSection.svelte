@@ -48,18 +48,18 @@
 		minute = payload.m
 		sec = payload.s
 		socketRetrieve = true
-		if(first){
-		axios
-			.patch('/am/card/pause')
-			.then((res) => {
-				console.log('pause time sucess')
-				first = !first
-			})
-			.catch((err) => {
-				console.log(err)
-			})
+		if (first) {
+			axios
+				.patch('/am/card/pause')
+				.then((res) => {
+					console.log('pause time sucess')
+					first = !first
+				})
+				.catch((err) => {
+					console.log(err)
+				})
 		}
-		})
+	})
 
 	onDestroy(() => {
 		unsubscribeclient2()
@@ -147,6 +147,7 @@
 	{handleCloseModal}
 	{client}
 	{socketRetrieve}
+	bind:first
 />
 
 <style>

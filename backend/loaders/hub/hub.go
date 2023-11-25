@@ -19,4 +19,5 @@ type Model struct {
 	StudentConns             []*extend.ConnModel `json:"-"`
 	Mode                     enum.Mode           `json:"mode"`
 	PreviewCount             uint8               `json:"preview_count"`
+	FinalCandidates          []*database.Team    `json:"-"`      
 }

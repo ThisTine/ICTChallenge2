@@ -49,3 +49,7 @@ func (r *teamEvent) GetAdminConn() *extend.ConnModel {
 func (r *teamEvent) GetStudentConns() []*extend.ConnModel {
 	return hub.Hub.StudentConns
 }
+
+func (r *teamEvent) SetFinalCandidates(candidates []*database.Team) {
+	hub.Hub.FinalCandidates = candidates
+}
