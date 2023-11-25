@@ -10,7 +10,7 @@
 	let teams: any[] = []
 	let update: any = []
 	let turn: number = 0
-	let isPaused: boolean = false
+	let isPaused: boolean = true
 
 	function fetchTurn() {
 		axios.get('/am/turn').then((res) => {
@@ -56,8 +56,6 @@
 			})
 			return
 		}
-		console.log(update)
-
 		axios
 			.patch('/am/score', { update })
 			.then((res) => {
@@ -96,22 +94,23 @@
 		if (isPaused) {
 			Swal.fire({
 				timer: 2000,
-				icon: 'error',
-				title: 'Error',
+				icon: 'warning',
+				title: 'Warning',
 				text: 'Game is paused! Please resume the game first!',
 			})
 			return
 		}
 		axios
 			.patch('/am/card/skip')
-			.then((res) =>
+			.then((res) => {
 				Swal.fire({
 					timer: 2000,
 					icon: 'success',
 					title: 'Success',
 					text: res.data?.message,
 				})
-			)
+				isPaused = !isPaused
+			})
 			.catch((res) =>
 				Swal.fire({
 					timer: 2000,
@@ -160,36 +159,36 @@
 		}
 	}
 	function dismiss() {
-		if (isPaused) {
-			Swal.fire({
-				timer: 2000,
-				icon: 'error',
-				title: 'Error',
-				text: 'Game is paused! Please resume the game first!',
-			})
-			return
-		}
+		// if (isPaused) {
+		// 	console.log('game is paused')
 
-		return () => {
-			axios
-				.patch('/am/card/dismiss')
-				.then((res) =>
-					Swal.fire({
-						timer: 2000,
-						icon: 'success',
-						title: 'Success',
-						text: res.data?.message,
-					})
-				)
-				.catch((res) =>
-					Swal.fire({
-						timer: 2000,
-						icon: 'error',
-						title: 'Error',
-						text: res.response.data.message,
-					})
-				)
-		}
+		// 	Swal.fire({
+		// 		timer: 2000,
+		// 		icon: 'warning',
+		// 		title: 'Warning',
+		// 		text: 'Game is paused! Please resume the game first!',
+		// 	})
+		// 	return
+		// }
+
+		axios
+			.patch('/am/card/dismiss')
+			.then((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'success',
+					title: 'Success',
+					text: res.data?.message,
+				})
+			)
+			.catch((res) =>
+				Swal.fire({
+					timer: 2000,
+					icon: 'error',
+					title: 'Error',
+					text: res.response.data.message,
+				})
+			)
 	}
 </script>
 
@@ -201,7 +200,8 @@
 		<button
 			on:click={pause()}
 			class="p-2 rounded-lg bg-gray-900 hover:bg-gray-800 font-semi text-white"
-			>Play/Pause
+		>
+			{isPaused ? 'Click to Play' : 'Click to Pause'}
 		</button>
 		<button
 			on:click={onSkip}
@@ -209,7 +209,7 @@
 			>Skip
 		</button>
 		<button
-			on:click={dismiss()}
+			on:click={dismiss}
 			class="ml-3 p-2 px-4 rounded-lg bg-red-900 hover:bg-red-800 font-semi text-white"
 			>dismiss
 		</button>

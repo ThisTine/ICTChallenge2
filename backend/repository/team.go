@@ -13,4 +13,5 @@ type TeamRepository interface {
 	GetLeaderboardConn() *extend.ConnModel
 	GetAdminConn() *extend.ConnModel
 	GetStudentConns() []*extend.ConnModel
+	SetFinalCandidates([]*database.Team)
 }

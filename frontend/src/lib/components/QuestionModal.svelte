@@ -15,6 +15,7 @@
 	export let minute: number
 	export let sec: number
 	export let socketRetrieve: boolean
+	export let first: boolean
 	$: timerFinish = false
 
 	$: minute = minute
@@ -26,6 +27,7 @@
 	const unsubscribeclient4 = client.subscribe('cd/dismiss', (payload) => {
 		timerFinish = false
 		handleCloseModal(cardCol, cardIndex)
+		first = true
 	})
 
 	onDestroy(() => {

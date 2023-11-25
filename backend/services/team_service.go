@@ -160,6 +160,27 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 			db.ScoreModel.Create(&database.Score{Change: change, Total: value.Ptr[int32](currentScore + *change), TeamId: &teams[i].Id})
 		}
 	}
+	teamScore := s.teamEvent.GetTeams()
+	//check if the round reach 20 set highestScore in hub 20 highest score
+	if len(teamScore[0].Scores) == 20 {
+		var highestScore int32
+		var candidate []*database.Team
+		for _, team := range teams {
+			if s.GetCurrentScore(team) > highestScore {
+				highestScore = s.GetCurrentScore(team)
+			}
+		}
+		
+		for _, team := range teams {
+			if s.GetCurrentScore(team) == highestScore {
+				candidate = append(candidate, team)
+			}
+			
+		}
+		s.teamEvent.SetFinalCandidates(candidate)
+		
+	}
+
 
 	s.topicEvent.SetCurrentCard(nil)
 	hub.Snapshot()
@@ -177,7 +198,9 @@ func (s *teamService) GetCurrentTurn() *database.Team {
 }
 
 func (s *teamService) GetNextTurn() *database.Team {
+	teamScore := s.teamEvent.GetTeams() 
 	turn := s.teamEvent.GetTurned()
+
 	if len(turn) == 10 {
 		s.teamEvent.SetTurned([]*database.Team{})
 		//delete turned in db
@@ -185,6 +208,41 @@ func (s *teamService) GetNextTurn() *database.Team {
 		turn = []*database.Team{}
 	}
 
+	//check length of the scores in team[0] if it is more than 20, and there is x team that has same highest score, candidate choose from them
+	if len(teamScore[0].Scores) >= 20 {
+		var finalCandidate = hub.Hub.FinalCandidates
+		
+		if len(finalCandidate) == 0 {
+			return nil
+		}
+		if len(turn) == len(finalCandidate) {
+			s.teamEvent.SetTurned([]*database.Team{})
+			//delete turned in db
+			db.TurnedModel.Exec("TRUNCATE TABLE turns")
+			turn = []*database.Team{}
+		}
+		var candidate []*database.Team
+		for _, team := range finalCandidate {
+			exist := false
+			for _, t := range turn {
+				if team.Id == t.Id {
+					exist = true
+					break
+				}
+			}
+			if !exist {
+				candidate = append(candidate, team)
+			}
+
+		}
+		selected := candidate[rand.Intn(len(candidate))]
+		s.teamEvent.SetTurned(append(turn, selected))
+		//add teamid to turned in db
+		db.TurnedModel.Create(&database.Turn{TeamId: &selected.Id})
+		return selected
+	}
+
+	//normal candidate selected
 	var candidates []*database.Team
 	for _, team := range s.teamEvent.GetTeams() {
 		exist := false
