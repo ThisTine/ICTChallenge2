@@ -161,7 +161,7 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 		}
 	}
 	teamScore := s.teamEvent.GetTeams()
-	//check if the round reach 20 set highestScore in hub 20 highest score
+	//check if the round reach 20 => set highestScore team in hub
 	if len(teamScore[0].Scores) == 20 {
 		var highestScore int32
 		var candidate []*database.Team
