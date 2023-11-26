@@ -9,8 +9,8 @@
 	import Preview from './Preview.svelte'
 	import { urlParser } from '../utils/urlParser'
 	import randomSound from 'src/assets/audio/randomsound.mp3'
-	
 
+	let isShowBoard = false
 	let mode = 'preview'
 	let teams: Array<Team> = []
 	let previewTeams: Array<Team> = []
@@ -53,6 +53,9 @@
 			return { ...team, isHighlighted: false, rank: i + 1 }
 		})
 		startPodium()
+		setTimeout(() => {
+			isShowBoard = true
+		}, 15000)
 	})
 
 	const unsubscribeclient3 = client.subscribe('lb/preview', (payload) => {
@@ -102,6 +105,14 @@
 			teamsBoard = [...teamsBoard, teams[3 + teamsBoard.length]]
 		}, 1000)
 	}
+
+	const cleanupLeaderBoard= (mode)=>{
+		if(mode !== 'podium'){
+			isShowBoard = false
+		}
+	}
+
+	$:cleanupLeaderBoard(mode)
 
 	function randomTeam(id: number) {
 		RDS.play();
@@ -178,6 +189,7 @@
 		<div
 			class="p-2 mx-24 bg-[rgb(255,255,255,0.3)] rounded-t-3xl h-[590px]"
 		>
+			{#if isShowBoard}
 				<div class=" px-32 flex flex-col gap-3 h-full">
 				{#each teamsBoard as team (team.name)}
 					<PodiumBoard
@@ -187,6 +199,7 @@
 					/>
 				{/each}
 			</div>
+			{/if}
 		</div>
 	</main>
 {:else}
