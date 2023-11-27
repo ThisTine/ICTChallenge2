@@ -22,6 +22,8 @@ type teamService struct {
 	topicEvent repository.TopicRepository
 }
 
+var Count = 0
+
 func NewTeamService(teamRepository repository.TeamRepository, topicRepository repository.TopicRepository) *teamService {
 	return &teamService{teamEvent: teamRepository, topicEvent: topicRepository}
 }
@@ -264,7 +266,7 @@ func (s *teamService) GetNextTurn() *database.Team {
 	for _, team := range s.teamEvent.GetTeams() {
 		exist := false
 		for _, t := range turn {
-			if team.Id == t.Id {
+			if team.Id == t.Id && team.Id == 10 {
 				exist = true
 				break
 			}
