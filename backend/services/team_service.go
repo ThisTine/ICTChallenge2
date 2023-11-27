@@ -44,6 +44,7 @@ func (s *teamService) GetCurrentTurnId() uint64 {
 	if len(turn) == 0 {
 		return 0
 	}
+
 	return turn[len(turn)-1].Id
 }
 
@@ -170,24 +171,22 @@ func (s *teamService) UpdateScore(body *payload.UpdateScore) ([]*payload.TeamSco
 				highestScore = s.GetCurrentScore(team)
 			}
 		}
-		
+
 		for _, team := range teams {
 			if s.GetCurrentScore(team) == highestScore {
 				candidate = append(candidate, team)
 			}
-			
+
 		}
 		s.teamEvent.SetFinalCandidates(candidate)
-		
-	}
 
+	}
 
 	s.topicEvent.SetCurrentCard(nil)
 	hub.Snapshot()
 
 	return s.GetRanking(), nil
 }
-
 
 func (s *teamService) GetCurrentTurn() *database.Team {
 	turn := s.teamEvent.GetTurned()
@@ -198,7 +197,7 @@ func (s *teamService) GetCurrentTurn() *database.Team {
 }
 
 func (s *teamService) GetNextTurn() *database.Team {
-	teamScore := s.teamEvent.GetTeams() 
+	teamScore := s.teamEvent.GetTeams()
 	turn := s.teamEvent.GetTurned()
 
 	if len(turn) == 10 {
@@ -211,7 +210,7 @@ func (s *teamService) GetNextTurn() *database.Team {
 	//check length of the scores in team[0] if it is more than 20, and there is x team that has same highest score, candidate choose from them
 	if len(teamScore[0].Scores) >= 20 {
 		var finalCandidate = hub.Hub.FinalCandidates
-		
+
 		if len(finalCandidate) == 0 {
 			//handle in case no team has smae highest score but want to play more
 			var candidate []*database.Team
