@@ -3,7 +3,7 @@
 	import { onDestroy } from 'svelte'
 
 	const client1 = ArtWS.connect(
-		'ws://localhost:3000/leaderboard',
+		import.meta.env.VITE_WS_URL,
 		{
 			log: true, // Log for console.warning
 			reconnect: true, // Reconnect on close
@@ -21,7 +21,7 @@
 	})
 
 	const client2 = ArtWS.connect(
-		'ws://localhost:3000/leaderboard',
+		import.meta.env.VITE_WS_URL,
 		{
 			log: true, // Log for console.warning
 			reconnect: true, // Reconnect on close

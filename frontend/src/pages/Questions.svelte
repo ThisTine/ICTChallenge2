@@ -14,7 +14,7 @@
 	let openQuestion: OpenQuestion
 
 	const client = ArtWS.connect(
-		"ws://localhost:3000/leaderboard",
+		import.meta.env.VITE_WS_URL,
 		{
 			log: true, // Log for console.warning
 			reconnect: true, // Reconnect on close
