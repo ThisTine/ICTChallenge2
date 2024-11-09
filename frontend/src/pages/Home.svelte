@@ -3,7 +3,7 @@
 	import { onDestroy } from 'svelte'
 
 	const client1 = ArtWS.connect(
-		'ws://localhost:3000/ws/projector/card?token=wdvXuDOytfx84J8d',
+		'ws://localhost:3000/leaderboard',
 		{
 			log: true, // Log for console.warning
 			reconnect: true, // Reconnect on close
@@ -21,7 +21,7 @@
 	})
 
 	const client2 = ArtWS.connect(
-		'ws://localhost:3000/ws/projector/leaderboard?token=wdvXuDOytfx84J8d',
+		'ws://localhost:3000/leaderboard',
 		{
 			log: true, // Log for console.warning
 			reconnect: true, // Reconnect on close

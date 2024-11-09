@@ -32,10 +32,10 @@
 	export let client
 
 	const widthCard: string = '324px'
-	const heightCard: string = '150px'
+	const heightCard: string = '120px'
 	const widthImg: string = '88px'
 	const textSize: string = '40px'
-	const iconSize: string = '120px'
+	const iconSize: string = '96px'
 
 	const unsubscribeclient2 = client.subscribe('cd/open', (payload) => {
 		openQuestion = payload

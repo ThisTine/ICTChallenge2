@@ -21,19 +21,19 @@
 
 <div>
 	<div
-		class="bg-white rounded-2xl flex flex-col justify-center items-center"
-		style="width: {widthCard}; height: {heightCard}"
+		class="bg-white rounded-2xl flex flex-row justify-center items-center"
+		style="width: {widthCard}; height: {heightCard}; gap: 1rem"
 		on:click={() => {
 			handleFlipCard(topicId, cardId)
 		}}
 	>
 		<div
 			class="w-16 h-16 absolute -left-2 -top-2 rounded-lg flex flex-col justify-center items-center {cardNumber ==
-			1
+			1 || cardNumber == 2
 				? 'bg-green-500 drop-shadow-lg'
-				: cardNumber == 2 || cardNumber == 3
+				: cardNumber == 3 || cardNumber == 4
 				? 'bg-indigo-500 drop-shadow-lg'
-				: cardNumber == 4 || cardNumber == 5
+				: cardNumber == 5 || cardNumber == 6
 				? 'bg-red-500 drop-shadow-lg'
 				: ''}"
 		>
@@ -56,7 +56,7 @@
 			src={img}
 			alt="logo"
 			class="mb-1"
-			style="width: {widthImg} ; height: {widthImg}"
+			style="width: {widthImg} ; height: {widthImg}; margin: 0 0 0 1rem"
 		/>
 		<div class="flex items-center">
 			<img

@@ -17,7 +17,7 @@
 
 	let icon: string = ''
 	const widthCard: string = '224px'
-	const heightCard: string = '124px'
+	const heightCard: string = '120px'
 	const widthImg: string = '60.3px'
 	const textSize: string = '27px'
 	const iconSize: string = '80px'
